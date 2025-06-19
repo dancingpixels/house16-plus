@@ -1,0 +1,8 @@
+<h1 class="mb-4"><%= @category.name %></h1>
+
+<p class="text-muted"><%= simple_format(@category.description) %></p>
+
+<div class="mt-4">
+  <%= link_to "Edit", edit_category_path(@category), class: "btn btn-outline-warning me-2" %>
+  <%= link_to "Back", categories_path, class: "btn btn-outline-secondary" %>
+</div>
