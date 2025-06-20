@@ -1,17 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
 
-  # def index
-  #   @products = Product.includes(:category).order(:name)
-  #   @product = Product.new
-  # end
-
-  # def index
-  #   @products = Product.includes(:category).order(:name).page(params[:page])
-  #   @product = Product.new
-  #   @edit_product = params[:edit_id] ? Product.find_by(id: params[:edit_id]) : nil
-  # end
-
   def index
     @categories = Category.all
     @selected_category = params[:category_id]

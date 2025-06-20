@@ -1,0 +1,35 @@
+<h1>Invoice for <%= @invoice.id %></h1>
+
+<hr>
+
+<h5>Line Items</h5>
+<table class="table table-bordered">
+  <thead class="table-light">
+    <tr>
+      <th>Product</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @invoice.line_items.each do |item| %>
+      <tr>
+        <td><%= item.product.name %></td>
+        <td><%= number_to_currency(item.price) %></td>
+        <td><%= item.quantity %></td>
+        <td><%= number_to_currency(item.price * item.quantity) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="mt-3">
+  <strong>Total:</strong>
+  <%= number_to_currency(@invoice.line_items.sum { |i| i.price * i.quantity }) %>
+</div>
+
+<div class="mt-4">
+  <%= link_to "Edit Invoice", edit_invoice_path(@invoice), class: "btn btn-outline-primary" %>
+  <%= link_to "Back to List", invoices_path, class: "btn btn-secondary" %>
+</div>

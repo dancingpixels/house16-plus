@@ -1,0 +1,28 @@
+<div class="nested-fields row g-2 align-items-end mb-2">
+  <div class="col-md-5">
+    <div class="form-group">
+      <%= f.label :product_id, "Product", class: "form-label" %>
+      <%= f.collection_select :product_id, Product.where("quantity > 0"), :id, ->(p) { "#{p.name} (#{p.quantity} left)" }, {}, class: "form-select" %>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="form-group">
+      <%= f.label :quantity, "Quantity", class: "form-label" %>
+      <%= f.number_field :quantity, class: "form-control", min: 1 %>
+    </div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="form-group">
+      <%= f.label :price, "Price", class: "form-label" %>
+      <%= f.number_field :price, class: "form-control", step: 0.01 %>
+    </div>
+  </div>
+
+  <div class="col-md-1 d-flex align-items-end">
+    <button type="button" class="btn btn-outline-danger" data-action="click->line-items#remove">✖</button>
+  </div>
+
+  <%= f.hidden_field :_destroy %>
+</div>

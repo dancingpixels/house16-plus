@@ -1,0 +1,28 @@
+<h1 class="mb-4">Invoices</h1>
+
+<%= link_to "New Invoice", new_invoice_path, class: "btn btn-primary mb-3" %>
+
+<table class="table table-bordered table-striped">
+  <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Items</th>
+      <th>Created</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @invoices.each do |invoice| %>
+      <tr>
+        <td><%= invoice.id %></td>
+        <td><%= invoice.line_items.count %></td>
+        <td><%= invoice.created_at.strftime("%Y-%m-%d") %></td>
+        <td>
+          <%= link_to "View", invoice_path(invoice), class: "btn btn-sm btn-outline-secondary" %>
+          <%= link_to "Edit", edit_invoice_path(invoice), class: "btn btn-sm btn-outline-primary" %>
+          <%= link_to "Delete", invoice_path(invoice), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-sm btn-outline-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
