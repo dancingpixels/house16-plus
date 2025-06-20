@@ -1,25 +1,50 @@
 <div class="nested-fields row g-2 align-items-end mb-2">
-  <div class="col-md-5">
+  <!-- Product and Price -->
+  <div class="col-md-6">
     <div class="form-group">
       <%= f.label :product_id, "Product", class: "form-label" %>
-      <%= f.collection_select :product_id, Product.where("quantity > 0"), :id, ->(p) { "#{p.name} (#{p.quantity} left)" }, {}, class: "form-select" %>
+      <div class="d-flex align-items-center gap-2">
+        <select class="form-select"
+                name="<%= f.object_name %>[product_id]"
+                id="<%= f.object_name %>_product_id"
+                data-action="change->line-items#updatePrice">
+          <option value="">Select product</option>
+          <% Product.where("quantity > 0").each do |product| %>
+            <option value="<%= product.id %>" data-price="<%= product.price %>">
+              <%= product.name %>
+            </option>
+          <% end %>
+        </select>
+
+        <span class="form-control-plaintext mb-0" data-line-items-target="priceDisplay">—</span>
+        <%= f.hidden_field :price, data: { line_items_target: "priceField" } %>
+      </div>
     </div>
   </div>
 
+  <!-- Quantity -->
   <div class="col-md-3">
     <div class="form-group">
       <%= f.label :quantity, "Quantity", class: "form-label" %>
-      <%= f.number_field :quantity, class: "form-control", min: 1 %>
+      <%= f.number_field :quantity,
+            class: "form-control",
+            min: 1,
+            data: {
+              action: "input->line-items#updateLineTotal",
+              line_items_target: "quantity"
+            } %>
     </div>
   </div>
 
-  <div class="col-md-3">
+  <!-- Line Total -->
+  <div class="col-md-2">
     <div class="form-group">
-      <%= f.label :price, "Price", class: "form-label" %>
-      <%= f.number_field :price, class: "form-control", step: 0.01 %>
+      <%= f.label :line_total, "Total", class: "form-label" %>
+      <div class="form-control-plaintext fw-semibold" data-line-items-target="lineTotal">0.00</div>
     </div>
   </div>
 
+  <!-- Remove Button -->
   <div class="col-md-1 d-flex align-items-end">
     <button type="button" class="btn btn-outline-danger" data-action="click->line-items#remove">✖</button>
   </div>

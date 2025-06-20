@@ -1,3 +1,30 @@
-<h1>New Invoice</h1>
-<%= render "form", invoice: @invoice %>
-<%= link_to "Back", invoices_path, class: "btn btn-secondary mt-3" %>
+<%= form_with model: @invoice, local: true do |form_builder| %>
+  <div data-controller="line-items">
+    <div data-line-items-target="container">
+      <%= form_builder.fields_for :line_items do |lf| %>
+        <%= render 'line_item_fields', f: lf %>
+      <% end %>
+    </div>
+
+    <!-- Template -->
+    <template data-line-items-target="template">
+      <%= form_builder.fields_for :line_items, LineItem.new, child_index: "NEW_RECORD" do |lf| %>
+        <%= render 'line_item_fields', f: lf %>
+      <% end %>
+    </template>
+
+    <button type="button" class="btn btn-outline-primary mt-2" data-action="click->line-items#add">
+      ➕ Add Line Item
+    </button>
+
+    <!-- Invoice Total -->
+    <div class="mt-4">
+      <label class="form-label">Invoice Total:</label>
+      <div class="form-control-plaintext fw-bold" data-line-items-target="invoiceTotal">0.00</div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <%= form_builder.submit "Save Invoice", class: "btn btn-primary" %>
+  </div>
+<% end %>
