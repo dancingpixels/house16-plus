@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   resources :categories
   resources :products
   resources :meals, only: [:index, :create, :update, :destroy]
+  get 'dashboard', to: 'dashboards#product_sales', 
+                                 as: :dashboard
+
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

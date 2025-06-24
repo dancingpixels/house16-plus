@@ -1,30 +1,23 @@
-<%= form_with model: @invoice, local: true do |form_builder| %>
-  <div data-controller="line-items">
-    <div data-line-items-target="container">
-      <%= form_builder.fields_for :line_items do |lf| %>
-        <%= render 'line_item_fields', f: lf %>
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <div class="mb-4 d-flex justify-content-between align-items-center">
+        <h1 class="h3 mb-0">🧾 New Invoice</h1>
+        <%= link_to "← Back to Invoices", invoices_path, class: "btn btn-outline-secondary" %>
+      </div>
+
+      <% if @invoice.errors.any? %>
+        <div class="alert alert-danger">
+          <h5 class="alert-heading">There were some problems with your submission:</h5>
+          <ul class="mb-0">
+            <% @invoice.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
       <% end %>
-    </div>
 
-    <!-- Template -->
-    <template data-line-items-target="template">
-      <%= form_builder.fields_for :line_items, LineItem.new, child_index: "NEW_RECORD" do |lf| %>
-        <%= render 'line_item_fields', f: lf %>
-      <% end %>
-    </template>
-
-    <button type="button" class="btn btn-outline-primary mt-2" data-action="click->line-items#add">
-      ➕ Add Line Item
-    </button>
-
-    <!-- Invoice Total -->
-    <div class="mt-4">
-      <label class="form-label">Invoice Total:</label>
-      <div class="form-control-plaintext fw-bold" data-line-items-target="invoiceTotal">0.00</div>
+      <%= render 'form', form_builder: form_with(model: @invoice, local: true) %>
     </div>
   </div>
-
-  <div class="mt-4">
-    <%= form_builder.submit "Save Invoice", class: "btn btn-primary" %>
-  </div>
-<% end %>
+</div>

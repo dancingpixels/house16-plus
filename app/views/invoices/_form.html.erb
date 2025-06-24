@@ -1,37 +1,52 @@
 <%= form_with model: @invoice, local: true do |form_builder| %>
-  <!-- Line Items Stimulus Controller -->
-  <div data-controller="line-items">
-    <!-- Existing Line Items -->
-    <div data-line-items-target="container">
-      <%= form_builder.fields_for :line_items do |lf| %>
-        <%= render 'line_item_fields', f: lf %>
-      <% end %>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      
+      <!-- Customer Name -->
+      <div class="mb-3">
+        <% if @invoice.errors[:customer_name].any? %>
+          <div class="invalid-feedback">
+            <%= @invoice.errors[:customer_name].first %>
+          </div>
+        <% end %>
+      </div>
+
+      <!-- Line Items -->
+      <div data-controller="line-items">
+        <h5 class="fw-bold border-bottom pb-2 mb-3">Line Items</h5>
+
+        <!-- Existing Line Items -->
+        <div data-line-items-target="container">
+          <%= form_builder.fields_for :line_items do |lf| %>
+            <%= render 'line_item_fields', f: lf %>
+          <% end %>
+        </div>
+
+        <!-- Template -->
+        <template data-line-items-target="template">
+          <%= form_builder.fields_for :line_items, LineItem.new, child_index: "NEW_RECORD" do |lf| %>
+            <%= render 'line_item_fields', f: lf %>
+          <% end %>
+        </template>
+
+        <!-- Add Line Item Button -->
+        <div class="text-end mt-3">
+          <button type="button" class="btn btn-outline-primary" data-action="click->line-items#add">
+            ➕ Add Line Item
+          </button>
+        </div>
+
+        <!-- Invoice Total -->
+        <div class="mt-4 text-end">
+          <label class="form-label fw-semibold">Invoice Total:</label>
+          <div class="form-control-plaintext fs-5" data-line-items-target="invoiceTotal">0.00</div>
+        </div>
+      </div>
     </div>
 
-    <!-- Hidden Template for New Line Items -->
-    <template data-line-items-target="template">
-  <%= capture do %>
-    <%= form_builder.fields_for :line_items, LineItem.new, child_index: "NEW_RECORD" do |lf| %>
-      <%= render 'line_item_fields', f: lf %>
-    <% end %>
-  <% end %>
-</template>
-
-
-    <!-- Add Line Item Button -->
-    <button type="button" class="btn btn-outline-primary mt-2" data-action="click->line-items#add">
-      ➕ Add Line Item
-    </button>
-
-    <!-- Invoice Total (Live Display) -->
-    <div class="mt-4">
-      <label class="form-label">Invoice Total:</label>
-      <div class="form-control-plaintext fw-bold" data-line-items-target="invoiceTotal">0.00</div>
+    <!-- Submit -->
+    <div class="card-footer bg-light text-end">
+      <%= form_builder.submit "💾 Save Invoice", class: "btn btn-primary px-4" %>
     </div>
-  </div>
-
-  <!-- Submit -->
-  <div class="mt-4">
-    <%= form_builder.submit "Save Invoice", class: "btn btn-primary" %>
   </div>
 <% end %>

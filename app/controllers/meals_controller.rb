@@ -5,7 +5,7 @@ class MealsController < ApplicationController
   def index
     @meal = Meal.new
     @edit_meal = Meal.find(params[:edit_id]) if params[:edit_id]
-    @meals = Meal.order(created_at: :desc).page(params[:page]).per(10)
+    @meals = Meal.order(created_at: :desc).page(params[:page]).per(100)
   end
 
 

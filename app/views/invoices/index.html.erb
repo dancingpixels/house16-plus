@@ -2,11 +2,12 @@
 
 <%= link_to "New Invoice", new_invoice_path, class: "btn btn-primary mb-3" %>
 
-<table class="table table-bordered table-striped">
+<table class="table table-bordered table-striped align-middle">
   <thead class="table-light">
     <tr>
       <th>ID</th>
       <th>Items</th>
+      <th>Total</th>
       <th>Created</th>
       <th>Actions</th>
     </tr>
@@ -16,7 +17,10 @@
       <tr>
         <td><%= invoice.id %></td>
         <td><%= invoice.line_items.count %></td>
-        <td><%= invoice.created_at.strftime("%Y-%m-%d") %></td>
+        <td>₦<strong><%=number_with_precision(
+          invoice.line_items.sum {|li| li.quantity * li.price }, precision: 2, delimiter: ',')%>
+          </strong></td>
+        <td><%= invoice.created_at.strftime('%A, %-d %B %Y %r') %></td>
         <td>
           <%= link_to "View", invoice_path(invoice), class: "btn btn-sm btn-outline-secondary" %>
           <%= link_to "Edit", edit_invoice_path(invoice), class: "btn btn-sm btn-outline-primary" %>

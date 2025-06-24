@@ -78,7 +78,7 @@
             <tr>
               <td><%= product.name %></td>
               <td><span class="badge bg-secondary"><%= product.category.name %></span></td>
-              <td>$<%= number_with_precision(product.price, precision: 2) %></td>
+              <td>₦<%= number_with_precision(product.price, precision: 2, delimiter: ',') %></td>
               <td><%= product.quantity %></td>
               <td class="text-end">
                 <%= link_to "Edit", products_path(edit_id: product.id), class: "btn btn-sm btn-outline-warning me-1" %>
