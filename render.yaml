@@ -6,14 +6,14 @@ services:
     buildCommand: './bin/render-build.sh'
     startCommand: './bin/rails server'
     envVars:
-      - key: DATABASE_URL
+      - key: postgresql://house16plus:TjQk9MW73rEno2AvOgueVCFdsfDAepQN@dpg-d1egfk2li9vc73a1jfdg-a/house16plus
         fromDatabase:
-          name: 
-          property: 
+          name: house16plus
+          property: connectionString
       - key: 981dde69e4eab7aebb0a4acce99c3e18
         sync: false
       - key: WEB_CONCURRENCY
         value: 2
 databases:
-  - name: 
+  - name: house16plus
     plan: free
