@@ -64,6 +64,10 @@ group :test do
   gem "selenium-webdriver"
 end
 
+group :production do 
+  gem "pg"
+end
+
 gem "kaminari", "~> 1.2"
 
 gem "devise", "~> 4.9"
