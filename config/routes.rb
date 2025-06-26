@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :invoices
-  resources :categories
+  resources :categories, except: [:show]
   resources :products
   resources :meals, only: [:index, :create, :update, :destroy]
   get 'dashboard', to: 'dashboards#product_sales', 
@@ -19,5 +20,5 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "categories#index"
+  root "dashboards#product_sales"
 end

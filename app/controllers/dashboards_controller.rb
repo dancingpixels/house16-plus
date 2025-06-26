@@ -1,23 +1,3 @@
-# class DashboardsController < ApplicationController
-#   def product_sales
-#     today = Date.current
-#     start_of_week = today.beginning_of_week
-#     start_of_month = today.beginning_of_month
-
-#     @daily_total = total_sales_between(today.beginning_of_day, today.end_of_day)
-#     @weekly_total = total_sales_between(start_of_week.beginning_of_day, today.end_of_day)
-#     @monthly_total = total_sales_between(start_of_month.beginning_of_day, today.end_of_day)
-#   end
-
-#   private
-
-#   def total_sales_between(start_time, end_time)
-#     LineItem
-#       .where(created_at: start_time..end_time)
-#       .sum("quantity * price")
-#   end
-# end
-
 class DashboardsController < ApplicationController
   def product_sales
     @sort = params[:sort].presence_in(%w[daily weekly monthly]) || "monthly"
@@ -42,7 +22,10 @@ class DashboardsController < ApplicationController
   end
 
   def compute_product_sales(today)
-    products = Product.includes(:line_items).all
+    products = Product
+               .joins(:line_items) # only products with sales
+               .distinct
+               .includes(:line_items)
 
     products.map do |product|
       {

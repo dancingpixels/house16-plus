@@ -1,6 +1,7 @@
 # app/controllers/meals_controller.rb
 class MealsController < ApplicationController
   before_action :set_meal, only: %i[update destroy]
+  before_action :authenticate_user!
 
   def index
     @meal = Meal.new
@@ -10,7 +11,7 @@ class MealsController < ApplicationController
 
 
   def create
-    @meal = Meal.new(meal_params)
+    @meal = current_user.meals.build(meal_params)
     if @meal.save
       redirect_to meals_path, notice: "Meal created successfully."
     else

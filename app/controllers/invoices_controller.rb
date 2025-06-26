@@ -1,5 +1,6 @@
 class InvoicesController < ApplicationController
   before_action :set_invoice, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   def index
     @invoices = Invoice.includes(:line_items).order(created_at: :desc)
@@ -14,7 +15,7 @@ class InvoicesController < ApplicationController
   end
 
   def create
-    @invoice = Invoice.new(invoice_params)
+    @invoice = current_user.invoices.build(invoice_params)
 
     if @invoice.save
       flash[:notice] = "Invoice was successfully created."

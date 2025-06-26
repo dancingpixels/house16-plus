@@ -1,8 +1,10 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[show edit update destroy]
+  before_action :authenticate_user!
+  before_action :require_admin
+  before_action :load_categories, only: [:index, :create, :update]
+  before_action :set_product, only: [:update, :destroy]
 
   def index
-    @categories = Category.all
     @selected_category = params[:category_id]
     scope = Product.includes(:category).order(created_at: :desc)
     scope = scope.where(category_id: @selected_category) if @selected_category.present?
@@ -11,46 +13,27 @@ class ProductsController < ApplicationController
     @edit_product = params[:edit_id] ? Product.find_by(id: params[:edit_id]) : nil
   end
 
-
-
-  def show; end
-
-  def new
-    @product = Product.new
-  end
-
-  def edit; end
-
   def create
-    @product = Product.new(product_params)
+    @product = current_user.products.build(product_params)
+
     if @product.save
       redirect_to products_path, notice: "Product was successfully created."
     else
-      render :new, status: :unprocessable_entity
-    end
-  end
-
-  # def update
-  #   if @product.update(product_params)
-  #     redirect_to product_path(@product), notice: "Product updated."
-  #   else
-  #     render :edit, status: :unprocessable_entity
-  #   end
-  # end
-
-  # products_controller.rb
-  def update
-    @product = Product.find(params[:id])
-    if @product.update(product_params)
-      redirect_to products_path, notice: "Product updated."
-    else
-      @edit_product = @product
-      @products = Product.all.includes(:category)
-      @categories = Category.all
+      @products = Product.includes(:category).order(created_at: :desc).page(params[:page]) # ✅ Consistent
+      @edit_product = nil
       render :index, status: :unprocessable_entity
     end
   end
 
+  def update
+    if @product.update(product_params)
+      redirect_to products_path, notice: "Product updated."
+    else
+      @edit_product = @product
+      @products = Product.includes(:category).order(created_at: :desc).page(params[:page]) # ✅ Consistent
+      render :index, status: :unprocessable_entity
+    end
+  end
 
   def destroy
     @product.destroy
@@ -58,6 +41,10 @@ class ProductsController < ApplicationController
   end
 
   private
+
+  def load_categories
+    @categories = Category.all
+  end
 
   def set_product
     @product = Product.find(params[:id])
