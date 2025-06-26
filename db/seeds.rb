@@ -9,7 +9,7 @@
 #   end
 
 User.create!(
-  name:  "Super Admin"
+  name:  "Super Admin",
   email: "admin@example.com",
   password: "password",
   password_confirmation: "password",
@@ -17,7 +17,7 @@ User.create!(
 )
 
 User.create!(
-  name: "Top Salesperson"
+  name: "Top Salesperson",
   email: "sales@example.com",
   password: "password",
   password_confirmation: "password",
