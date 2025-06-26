@@ -9,16 +9,16 @@
 #   end
 
 User.create!(
-  name:  "Super Admin",
-  email: "admin@example.com",
+  name:  "Super Admin 1",
+  email: "admin1@example.com",
   password: "password",
   password_confirmation: "password",
   role: :admin
 )
 
 User.create!(
-  name: "Top Salesperson",
-  email: "sales@example.com",
+  name: "Top Salesperson 1",
+  email: "sales1@example.com",
   password: "password",
   password_confirmation: "password",
   role: :sales
