@@ -1,4 +1,6 @@
 class DashboardsController < ApplicationController
+  before_action :authenticate_user!
+  
   def product_sales
     @sort = params[:sort].presence_in(%w[daily weekly monthly]) || "monthly"
     @filter = params[:product_name].to_s.strip.downcase
