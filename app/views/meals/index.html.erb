@@ -61,11 +61,11 @@
                   <td><span class="text-muted"><%= meal.created_at.strftime("%B %d, %Y %I:%M %p") %></span></td>
                   <td class="text-end">
                     <%= link_to "Edit", meals_path(edit_id: meal.id), class: "btn btn-sm btn-outline-warning me-1" %>
-                    <%= button_to meal_path(meal), method: :delete,
+                    <%#= button_to meal_path(meal), method: :delete,
                           data: { confirm: "Delete this meal?" },
                           class: "btn btn-sm btn-outline-danger", form: { class: "d-inline" } do %>
-                      <i class="bi bi-trash"></i>
-                    <% end %>
+                      <%# <i class="bi bi-trash"></i> %>
+                    <%# end %>
                   </td>
                 </tr>
               <% end %>

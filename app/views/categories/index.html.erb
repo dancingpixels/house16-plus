@@ -21,9 +21,9 @@
             <td class="fw-semibold"><%= category.name %></td>
             <td class="text-muted"><%= truncate(category.description, length: 100) %></td>
             <td class="text-end">
-              <%= link_to category, class: "btn btn-sm btn-outline-secondary me-1", title: "View" do %>
-                <i class="bi bi-eye"></i>
-              <% end %>
+              <%#= link_to category, class: "btn btn-sm btn-outline-secondary me-1", title: "View" do %>
+                <%# <i class="bi bi-eye"></i> %>
+              <%# end %>
               <%= link_to edit_category_path(category), class: "btn btn-sm btn-outline-warning me-1", title: "Edit" do %>
                 <i class="bi bi-pencil"></i>
               <% end %>

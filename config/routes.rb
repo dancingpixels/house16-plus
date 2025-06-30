@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   resources :invoices
   resources :categories, except: [:show]
   resources :products
-  resources :meals, only: [:index, :create, :update, :destroy]
-  get 'dashboard', to: 'dashboards#product_sales', 
-                                 as: :dashboard
+  get 'dashboard', to: 'dashboards#product_sales', as: :dashboard
+  resources :meals, only: [:index, :create, :update]
+  get 'kitchen', to: 'kitchen#index'
 
 
 
