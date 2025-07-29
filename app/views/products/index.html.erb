@@ -53,7 +53,7 @@
   <% end %>
 </div>
 
-<%# -- Product List with Inline Edit -- %>
+<%# -- Product List -- %>
 <div class="card shadow-sm rounded-4 border-0">
   <div class="table-responsive">
     <table class="table table-hover align-middle mb-0">
@@ -67,55 +67,21 @@
         </tr>
       </thead>
       <tbody>
-        <% if @edit_product && @edit_product.errors.any? %>
+        <% @products.each do |product| %>
           <tr>
-            <td colspan="5">
-              <div class="alert alert-danger mb-2">
-                <ul class="mb-0 ps-3">
-                  <% @edit_product.errors.full_messages.each do |msg| %>
-                    <li><%= msg %></li>
-                  <% end %>
-                </ul>
-              </div>
+            <td><%= product.name %></td>
+            <td><span class="badge bg-secondary"><%= product.category.name %></span></td>
+            <td>₦<%= number_with_precision(product.price, precision: 2, delimiter: ',') %></td>
+            <td><%= product.quantity %></td>
+            <td class="text-end">
+              <%= link_to "Edit", edit_product_path(product), class: "btn btn-sm btn-outline-warning me-1" %>
+              <%= button_to product_path(product), method: :delete,
+                    data: { confirm: "Delete this product?" },
+                    class: "btn btn-sm btn-outline-danger", form: { class: "d-inline" } do %>
+                <i class="bi bi-trash"></i>
+              <% end %>
             </td>
           </tr>
-        <% end %>
-
-        <% @products.each do |product| %>
-          <% if @edit_product && @edit_product.id == product.id %>
-            <%= form_with(model: @edit_product, local: true) do |form| %>
-              <tr>
-                <td><%= form.text_field :name, class: "form-control form-control-sm", required: true %></td>
-                <td>
-                  <%= form.collection_select :category_id, @categories, :id, :name, {},
-                        { class: "form-select form-select-sm", required: true } %>
-                </td>
-                <td><%= form.number_field :price, step: 0.01, min: 0,
-                        class: "form-control form-control-sm", required: true %></td>
-                <td><%= form.number_field :quantity, min: 0,
-                        class: "form-control form-control-sm", required: true %></td>
-                <td class="text-end">
-                  <%= form.submit "Save", class: "btn btn-sm btn-success me-1" %>
-                  <%= link_to "Cancel", products_path, class: "btn btn-sm btn-secondary" %>
-                </td>
-              </tr>
-            <% end %>
-          <% else %>
-            <tr>
-              <td><%= product.name %></td>
-              <td><span class="badge bg-secondary"><%= product.category.name %></span></td>
-              <td>₦<%= number_with_precision(product.price, precision: 2, delimiter: ',') %></td>
-              <td><%= product.quantity %></td>
-              <td class="text-end">
-                <%= link_to "Edit", products_path(edit_id: product.id), class: "btn btn-sm btn-outline-warning me-1" %>
-                <%= button_to product_path(product), method: :delete,
-                      data: { confirm: "Delete this product?" },
-                      class: "btn btn-sm btn-outline-danger", form: { class: "d-inline" } do %>
-                  <i class="bi bi-trash"></i>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
         <% end %>
       </tbody>
     </table>

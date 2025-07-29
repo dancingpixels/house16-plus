@@ -25,13 +25,18 @@ class ProductsController < ApplicationController
     end
   end
 
+  def edit
+     @product = Product.find(params[:id])
+     @categories = Category.all
+  end
+
   def update
     if @product.update(product_params)
       redirect_to products_path, notice: "Product updated."
     else
       @edit_product = @product
-      @products = Product.includes(:category).order(created_at: :desc).page(params[:page]) # ✅ Consistent
-      render :index, status: :unprocessable_entity
+      @products = Product.includes(:category).order(created_at: :desc).page(params[:page])
+      render :edit, status: :unprocessable_entity
     end
   end
 
