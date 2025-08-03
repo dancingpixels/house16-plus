@@ -84,6 +84,8 @@ production:
     database: <%= ENV["DATABASE_URL"] %>
     username: <%= ENV["DATABASE_USERNAME"] %>
     password: <%= ENV["DATABASE_PASSWORD"] %>
+    host: localhost
+    port: 5432
   # cache:
   #   <<: *primary_production
   #   database: sales_invoice_app_production_cache
