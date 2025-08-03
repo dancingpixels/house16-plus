@@ -82,7 +82,7 @@ production:
   primary: &primary_production
     <<: *default
     database: <%= ENV["DATABASE_URL"] %>
-    password: <%= ENV["DATABASE_PASSWORD"] %> 
+    password: FdzEia2T4yNlhvIAyqqVC1xh9OCcf5BS
     host: dpg-d27f7s0gjchc73852m00-a
     port: 5432
   cache:
