@@ -86,14 +86,14 @@ production:
     password: FdzEia2T4yNlhvIAyqqVC1xh9OCcf5BS
     host: dpg-d27f7s0gjchc73852m00-a
     port: 5432
-  # cache:
-  #   <<: *primary_production
-  #   database: sales_invoice_app_production_cache
-  #   migrations_paths: db/cache_migrate
-  # queue:
-  #   <<: *primary_production
-  #   database: sales_invoice_app_production_queue
-  #   migrations_paths: db/queue_migrate
+  cache:
+    <<: *primary_production
+    database: cable
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    database: cable
+    migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
     database: cable
