@@ -81,9 +81,8 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: postgresql://house16_20mm_user:FdzEia2T4yNlhvIAyqqVC1xh9OCcf5BS@dpg-d27f7s0gjchc73852m00-a/house16_20mm
-    username: house16_20mm_user
-    password: FdzEia2T4yNlhvIAyqqVC1xh9OCcf5BS
+    database: <%= ENV["DATABASE_URL"] %>
+    password: <%= ENV["DATABASE_PASSWORD"] %> 
     host: dpg-d27f7s0gjchc73852m00-a
     port: 5432
   cache:
