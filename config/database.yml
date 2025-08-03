@@ -81,9 +81,9 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: <%= ENV["DATABASE_URL"] %>
-    username: <%= ENV["DATABASE_USERNAME"] %>
-    password: <%= ENV["DATABASE_PASSWORD"] %>
+    database: house16_20mm
+    username: house16_20mm_user
+    password: FdzEia2T4yNlhvIAyqqVC1xh9OCcf5BS
   # cache:
   #   <<: *primary_production
   #   database: sales_invoice_app_production_cache
