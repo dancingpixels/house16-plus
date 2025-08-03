@@ -84,6 +84,8 @@ production:
     database: house16_20mm
     username: house16_20mm_user
     password: FdzEia2T4yNlhvIAyqqVC1xh9OCcf5BS
+    host: dpg-d27f7s0gjchc73852m00-a
+    port: 5432
   # cache:
   #   <<: *primary_production
   #   database: sales_invoice_app_production_cache
